@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     5 окт. 2019 г. 18:38:35
+
+     project    
+     description
+                   
+     danich
+     ====================================================================== -->
+<project name="usermanagement" default="test" basedir=".">
+    <description>
+            description
+    </description>
+
+	<property name="build-dir" value="${basedir}/bin"/>
+	<property name="test-java-dir" value="${basedir}/src/test/java"/>
+	<property name="main-java-dir" value="${basedir}/src/main/java"/>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="test" depends="test-compile" description="description">
+        <junit>
+        	<classpath>
+        		<pathelement location="${build-dir}"/>
+        	</classpath>
+        	<formatter type="plain"/>
+        	<batchtest>
+        	    <fileset dir="${test-java-dir}">
+        	      <include name="**/*.class"/>
+        	    </fileset>
+        	</batchtest>
+        </junit>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile" depends="init">
+		<javac srcdir="${main-java-dir}" destdir="${build-dir}"/>
+	</target>
+	
+    <target name="test-compile" depends="compile">
+    	<javac srcdir="${test-java-dir}" destdir="${build-dir}" includeantruntime="flase">
+			<classpath>
+				<path id="org.junit" location="C:\Users\danich\plugins\org.junit_4.12.0.v201504281640\junit.jar"/>
+			</classpath>
+    	</javac>
+    </target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${build-dir}"/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build-dir}" failonerror="no"/>
+	</target>
+
+</project>
